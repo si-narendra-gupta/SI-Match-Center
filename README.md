@@ -36,7 +36,7 @@ ksp = "2.3.9"
 hilt = "2.60"
 
 [libraries]
-si-matchcenter = { group = "com.github.si-narendra-gupta", name = "SI-Match-Center", version = "1.0.1" }
+si-matchcenter = { group = "com.github.si-narendra-gupta", name = "SI-Match-Center", version = "1.0.2" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.11.0" }

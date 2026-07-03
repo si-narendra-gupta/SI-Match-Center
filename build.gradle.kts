@@ -10,5 +10,5 @@ plugins {
 
 allprojects {
     group = "com.github.si-narendra-gupta"
-    version = "1.0.1"
+    version = "1.0.2"
 }
