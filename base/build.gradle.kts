@@ -1,13 +1,20 @@
+import org.gradle.api.publish.maven.MavenPublication
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.android.hilt)
+    id("maven-publish")
 }
 
 android {
     namespace = "com.sportz.base"
     compileSdk = 37
+
+    publishing {
+        singleVariant("release")
+    }
 
     buildFeatures {
         buildConfig = true // ✅ generate BuildConfig
@@ -37,6 +44,16 @@ android {
     kotlin {
         compilerOptions {
             jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+        }
+    }
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            register<MavenPublication>("release") {
+                from(components["release"])
+            }
         }
     }
 }

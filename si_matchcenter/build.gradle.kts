@@ -1,14 +1,21 @@
+import org.gradle.api.publish.maven.MavenPublication
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.android.hilt)
+    id("maven-publish")
 }
 
 android {
     namespace = "com.sportz.si_matchcenter"
     compileSdk = 37
+
+    publishing {
+        singleVariant("release")
+    }
 
     defaultConfig {
         minSdk = 24
@@ -29,6 +36,16 @@ android {
     kotlin {
         compilerOptions {
             jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+        }
+    }
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            register<MavenPublication>("release") {
+                from(components["release"])
+            }
         }
     }
 }

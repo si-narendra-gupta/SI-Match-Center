@@ -7,3 +7,8 @@ plugins {
     alias(libs.plugins.kotlin.ksp) apply false
     alias(libs.plugins.android.hilt) apply false
 }
+
+allprojects {
+    group = "com.github.si-narendra-gupta"
+    version = "1.0.0"
+}
