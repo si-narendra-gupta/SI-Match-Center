@@ -1,15 +1,10 @@
 package com.sportz.base.utils
 
 import java.text.SimpleDateFormat
-import java.time.Duration
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.ZoneOffset
-import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeParseException
+import java.util.Calendar
+import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 object CalendarUtils {
 
@@ -24,14 +19,16 @@ object CalendarUtils {
         dateString: String?,
         dateFormat: String,
         requiredDateFormat: String,
-        targetZoneId: ZoneId = ZoneId.systemDefault()
+        targetZoneId: String = TimeZone.getDefault().id
     ): String? {
         return try {
             if (dateString == null) return null
-            val formatter = DateTimeFormatter.ofPattern(dateFormat, Locale.ENGLISH)
-            val dateTime = LocalDateTime.parse(dateString, formatter)
-            val zonedDateTime = dateTime.atZone(ZoneId.systemDefault()).withZoneSameInstant(targetZoneId)
-            zonedDateTime.format(DateTimeFormatter.ofPattern(requiredDateFormat, Locale.ENGLISH))
+            val inputFormat = SimpleDateFormat(dateFormat, Locale.ENGLISH)
+            val date = inputFormat.parse(dateString) ?: return null
+            
+            val outputFormat = SimpleDateFormat(requiredDateFormat, Locale.ENGLISH)
+            outputFormat.timeZone = TimeZone.getTimeZone(targetZoneId)
+            outputFormat.format(date)
         } catch (e: Exception) {
             e.printStackTrace()
             null
@@ -45,19 +42,24 @@ object CalendarUtils {
     ): String? {
         return try {
             if (dateString == null) return null
-            val formatter = DateTimeFormatter.ofPattern(dateFormat, Locale.ENGLISH)
-            val publishedTime = LocalDateTime.parse(dateString, formatter).atZone(ZoneId.systemDefault()).toInstant()
-            val now = Instant.now()
-            val duration = Duration.between(publishedTime, now)
+            val formatter = SimpleDateFormat(dateFormat, Locale.ENGLISH)
+            val publishedDate = formatter.parse(dateString) ?: return null
+            val now = Date()
+            
+            val diffInMillis = now.time - publishedDate.time
+            val diffInSeconds = diffInMillis / 1000
+            val diffInMinutes = diffInSeconds / 60
+            val diffInHours = diffInMinutes / 60
+            val diffInDays = diffInHours / 24
 
             when {
-                duration.toDays() >= 365 -> "${duration.toDays() / 365}y"
-                duration.toDays() >= 30 -> "${duration.toDays() / 30}m"
-                duration.toDays() >= 7 -> "${duration.toDays() / 7}w"
-                duration.toDays() >= 1 -> "${duration.toDays()}d"
-                duration.toHours() >= 1 -> "${duration.toHours()}h"
-                duration.toMinutes() >= 1 -> "${duration.toMinutes()}min"
-                duration.seconds >= 3 -> "${duration.seconds}s"
+                diffInDays >= 365 -> "${diffInDays / 365}y"
+                diffInDays >= 30 -> "${diffInDays / 30}m"
+                diffInDays >= 7 -> "${diffInDays / 7}w"
+                diffInDays >= 1 -> "${diffInDays}d"
+                diffInHours >= 1 -> "${diffInHours}h"
+                diffInMinutes >= 1 -> "${diffInMinutes}min"
+                diffInSeconds >= 3 -> "${diffInSeconds}s"
                 else -> context.getString(com.sportz.base.R.string.just_now)
             }
         } catch (e: Exception) {
@@ -67,11 +69,12 @@ object CalendarUtils {
     }
 
     fun getCurrentDate(): String {
-        return LocalDateTime.now().format(DateTimeFormatter.ofPattern(DOB_DATE_FORMAT))
+        return SimpleDateFormat(DOB_DATE_FORMAT, Locale.ENGLISH).format(Date())
     }
 
     fun getGreetings(context: android.content.Context): String {
-        val currentHour = LocalDateTime.now().hour
+        val calendar = Calendar.getInstance()
+        val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
         val stringRes = when (currentHour) {
             in 5..11 -> com.sportz.base.R.string.greeting_morning
             in 12..16 -> com.sportz.base.R.string.greeting_afternoon
@@ -80,6 +83,7 @@ object CalendarUtils {
         }
         return context.getString(stringRes)
     }
+
     fun convertDateStringToMillis(
         dateString: String?,
         dateFormat: String,
@@ -90,9 +94,7 @@ object CalendarUtils {
             }
             val simpleDateFormat = SimpleDateFormat(dateFormat, Locale.US)
             val date = simpleDateFormat.parse(dateString)
-            if (date != null) {
-                return date.time
-            } else -1L
+            date?.time ?: -1L
         } catch (e: Exception) {
             -1L
         }

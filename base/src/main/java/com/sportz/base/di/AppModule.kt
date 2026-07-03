@@ -17,13 +17,6 @@ import javax.inject.Singleton
 object AppModule {
 
     @Provides
-    fun provideAppName(
-        baseConfigContract: BaseConfigContract, @ApplicationContext context: Context
-    ): String {
-        return context.getString(baseConfigContract.appName())
-    }
-
-    @Provides
     @Singleton
     fun provideCustomTabIntent(
         baseConfigContract: BaseConfigContract,

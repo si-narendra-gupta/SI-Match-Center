@@ -14,8 +14,6 @@ activityCompose = "1.13.0"
 kotlin = "2.4.0"
 ksp = "2.3.9"
 composeBom = "2026.02.01"
-desugar_jdk_libs = "2.1.4"
-
 daggerHilt = "2.60"
 hiltNavigationCompose = "1.2.0"
 
@@ -47,8 +45,6 @@ androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
-
-desugar-jdk-libs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
 
 dagger-hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "daggerHilt" }
 dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "daggerHilt" }

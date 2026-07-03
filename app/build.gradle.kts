@@ -29,7 +29,6 @@ android {
         }
     }
     compileOptions {
-        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
@@ -40,8 +39,6 @@ android {
 }
 
 dependencies {
-    coreLibraryDesugaring(libs.desugar.jdk.libs)
-    implementation(project(":base"))
     implementation(project(":si_matchcenter"))
     implementation(libs.dagger.hilt)
     ksp(libs.dagger.hilt.compiler)

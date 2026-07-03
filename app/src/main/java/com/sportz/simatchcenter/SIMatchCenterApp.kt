@@ -1,7 +1,7 @@
 package com.sportz.simatchcenter
 
-import com.sportz.base.BaseApplication
+import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class SIMatchCenterApp : BaseApplication()
+class SIMatchCenterApp : Application()

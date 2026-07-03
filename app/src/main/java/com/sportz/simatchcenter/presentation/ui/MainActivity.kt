@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import com.sportz.si_matchcenter.helper.ThemeConstants
-import com.sportz.si_matchcenter.presentation.ui.screen.MatchCenterContent
 import com.sportz.simatchcenter.presentation.ui.screen.matchcenter.MatchCenterScreen
 import com.sportz.simatchcenter.presentation.ui.theme.SIMatchCenterTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,13 +19,8 @@ class MainActivity : ComponentActivity() {
         //enableEdgeToEdge()
         setContent {
             SIMatchCenterTheme {
-                /*MatchCenterScreen(
-                    gameId = "rrck03302026267884",
-                    theme = ThemeConstants.DEFAULT_THEME
-                )*/
-                MatchCenterContent(
-                    gameId = "rrck03302026267884",
-                    theme = ThemeConstants.DEFAULT_THEME
+                MatchCenterScreen(
+                    gameId = "enwsaw07022026262349", theme = ThemeConstants.THEME_ROYAL_GOLD
                 )
             }
         }

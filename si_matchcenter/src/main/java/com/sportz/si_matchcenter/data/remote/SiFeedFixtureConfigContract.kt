@@ -1,10 +1,10 @@
 package com.sportz.si_matchcenter.data.remote
 
-import android.content.res.Resources
-import com.sportz.si_matchcenter.business.domain.model.themecolor.MatchCenterThemeColors
 import com.sportz.si_matchcenter.business.domain.model.MatchTabList
 
 interface SiFeedFixtureConfigContract {
+    fun getBaseUrl(): String
+    fun getIsDebugMode(): Boolean
 
     fun getTeamLogo(
         teamId: String

@@ -195,7 +195,7 @@ object ThemeConstants {
         "three_bg": "#07167A",
         "four_bg": "#1226AA",
         "six_bg": "#E50695",
-        "runs_label": "#E50695"
+        "runs_label": "#FFFFFF"
       }
     }
   }
@@ -268,7 +268,7 @@ object ThemeConstants {
         "three_bg": "#1A237E",
         "four_bg": "#3F51B5",
         "six_bg": "#FFC107",
-        "runs_label": "#FFC107"
+        "runs_label": "#FFFFFF"
       }
     }
   }
@@ -341,7 +341,7 @@ object ThemeConstants {
         "three_bg": "#06260F",
         "four_bg": "#1B5E20",
         "six_bg": "#4CAF50",
-        "runs_label": "#4CAF50"
+        "runs_label": "#FFFFFF"
       }
     }
   }
