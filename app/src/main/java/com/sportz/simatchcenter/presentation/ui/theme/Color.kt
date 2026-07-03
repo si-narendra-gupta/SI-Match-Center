@@ -1,4 +1,4 @@
-package com.sportz.simatchcenter.ui.theme
+package com.sportz.simatchcenter.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
