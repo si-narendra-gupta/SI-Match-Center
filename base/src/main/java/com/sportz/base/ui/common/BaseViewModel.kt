@@ -22,6 +22,22 @@ abstract class BaseViewModel<T : UiState, I : MviIntent> : ViewModel() {
     private val _state = MutableStateFlow<BaseState<T>>(BaseState.Empty())
     val state: StateFlow<BaseState<T>> = _state.asStateFlow()
 
+
+    private val _uiState = MutableStateFlow<T?>(null)
+    val uiState: StateFlow<T?> = _uiState
+
+    fun getCurrentUiData(): T? {
+        return _uiState.value
+    }
+
+    fun updateSuccessData(data: T?) {
+        _uiState.value = data
+        data?.let {
+            updateUiState(BaseState.Success(data))
+        }
+
+    }
+
     /**
      * Updates the UI state
      */
@@ -44,29 +60,54 @@ abstract class BaseViewModel<T : UiState, I : MviIntent> : ViewModel() {
     }
 
     protected fun setSuccess(data: T) {
+        _uiState.value = data
         updateUiState(BaseState.Success(data))
+    }
+    /**
+     * Executes a suspend function and handles the result
+     * Automatically sets loading state before execution and handles errors
+     */
+    protected suspend fun <R> executeWithLoading(
+        onLoading: () -> Unit = { setLoading() },
+        onSuccess: (R) -> Unit,
+        onError: (Throwable) -> Unit = { setError(it.message ?: "Unknown error", it) },
+        block: suspend () -> R
+    ) {
+        try {
+            Log.d("Loading set", "loading is initiallized.")
+            onLoading()
+            val result = block()
+            onSuccess(result)
+            Log.d("Loading set", "loading is finished.")
+        } catch (e: Exception) {
+            onError(e)
+        }
     }
 
     /**
      * Executes a suspend function and handles the result with automatic state management
+     * Sets loading before execution, success with data, or error state
      */
-    protected fun <R> executeWithStateManagement(
-        block: suspend () -> R,
+    protected suspend fun <R> executeWithStateManagement(
         onSuccess: (R) -> T,
-        onError: (Throwable) -> Unit = { setError(it.message ?: "Unknown error", it) }
+        onError: (Throwable) -> Unit = { setError(it.message ?: "Unknown error", it) },
+        block: suspend () -> R
     ) {
-        viewModelScope.launch {
-            setLoading()
-            try {
-                val result = block()
-                if (result == null || (result is Collection<*> && result.isEmpty())) {
+        executeWithLoading(
+            onSuccess = { result ->
+                if (result == null) {
                     setEmpty()
-                } else {
-                    setSuccess(onSuccess(result))
+                    return@executeWithLoading
                 }
-            } catch (t: Throwable) {
-                onError(t)
-            }
-        }
+                // 🔥 2. COLLECTION EMPTY CHECK
+                if (result is Collection<*> && result.isEmpty()) {
+                    setEmpty()
+                    return@executeWithLoading
+                }
+                setSuccess(onSuccess(result))
+            },
+            onError = onError,
+            block = block
+        )
     }
 }

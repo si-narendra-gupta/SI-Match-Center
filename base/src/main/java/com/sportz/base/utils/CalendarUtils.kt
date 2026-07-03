@@ -1,5 +1,6 @@
 package com.sportz.base.utils
 
+import java.text.SimpleDateFormat
 import java.time.Duration
 import java.time.Instant
 import java.time.LocalDateTime
@@ -15,6 +16,9 @@ object CalendarUtils {
     const val PUBLISHED_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss"
     const val SCORE_CARD_MATCH_DATE_FORMAT = "yyyy-MM-dd'T'HH:mmZ"
     const val DOB_DATE_FORMAT = "yyyy-MM-dd"
+    const val MATCH_FULL_DATE_WITH_OFFSET = "M/d/yyyy'T'HH:mmXXX"
+    const val MATCH_REQUIRED_DATE_FORMAT = "EEEE d'th' MMM"
+    const val MATCH_TIME = "HH:mm"
 
     fun convertDateStringToSpecifiedDateString(
         dateString: String?,
@@ -75,5 +79,22 @@ object CalendarUtils {
             else -> com.sportz.base.R.string.greeting_default
         }
         return context.getString(stringRes)
+    }
+    fun convertDateStringToMillis(
+        dateString: String?,
+        dateFormat: String,
+    ): Long {
+        return try {
+            if (dateString == null) {
+                return -1
+            }
+            val simpleDateFormat = SimpleDateFormat(dateFormat, Locale.US)
+            val date = simpleDateFormat.parse(dateString)
+            if (date != null) {
+                return date.time
+            } else -1L
+        } catch (e: Exception) {
+            -1L
+        }
     }
 }
