@@ -412,18 +412,19 @@ fun ManhattanChart(
                 }
 
                 // Wicket markers
+                val depth = 5.dp.toPx()
                 if (over.team1Wickets > 0) {
                     drawWicketMarker(
-                        x = xBase - barWidth / 2 - barGap / 2,
-                        y = chartHeight - (over.team1Runs.toFloat() / maxY * chartHeight) - 10.dp.toPx(),
+                        x = xBase - barWidth / 2 - barGap / 2 + depth / 2,
+                        y = chartHeight - (over.team1Runs.toFloat() / maxY * chartHeight) - 16.dp.toPx(),
                         wicketBGColor = wicketBGColor,
                         wicketTextColor = wicketTextColor
                     )
                 }
                 if (over.team2Wickets > 0) {
                     drawWicketMarker(
-                        x = xBase + barWidth / 2 + barGap / 2,
-                        y = chartHeight - (over.team2Runs.toFloat() / maxY * chartHeight) - 10.dp.toPx(),
+                        x = xBase + barWidth / 2 + barGap / 2 + depth / 2,
+                        y = chartHeight - (over.team2Runs.toFloat() / maxY * chartHeight) - 16.dp.toPx(),
                         wicketBGColor = wicketBGColor,
                         wicketTextColor = wicketTextColor
                     )
