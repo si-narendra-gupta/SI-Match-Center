@@ -32,7 +32,7 @@ data class MatchCenterThemeColors(
             upcoming_badge = Badge(background = "#E0E0E0", text = "#1C1C28"),
             result_badge = Badge(background = "#DE3333", text = "#FFFFFF"),
             team = Team(
-                yet_to_bat = "#1C1C2880",
+                yet_to_bat = "#FFFFFF",
                 highlight_color = "#FFFFFF",
                 name = "#80FFFFFF",
                 score = "#80FFFFFF",

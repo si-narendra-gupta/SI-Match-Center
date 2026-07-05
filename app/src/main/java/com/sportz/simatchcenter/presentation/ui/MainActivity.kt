@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             SIMatchCenterTheme {
                 MatchCenterScreen(
-                    gameId = "enwsaw07022026262349", theme = ThemeConstants.THEME_ROYAL_GOLD
+                    gameId = "enwauw07052026262350", theme = ThemeConstants.THEME_DARK_EMERALD
                 )
             }
         }
@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
 fun GreetingPreview() {
     SIMatchCenterTheme {
         MatchCenterScreen(
-            gameId = "enwsaw07022026262349", theme = ThemeConstants.THEME_PINK_NAVY
+            gameId = "enwsaw07022026262349", theme = ThemeConstants.THEME_DARK_EMERALD
         )
     }
 }

@@ -30,7 +30,7 @@ object ThemeConstants {
     "text": "#FFFFFF"
   },
   "team": {
-    "yet_to_bat": "#1C1C2880",
+    "yet_to_bat": "#FFFFFF",
     "highlight_color": "#FFFFFF",
     "name": "#80FFFFFF",
     "score": "#80FFFFFF",
@@ -211,7 +211,7 @@ object ThemeConstants {
   "upcoming_badge": { "background": "#E0E0E0", "text": "#424242" },
   "result_badge": { "background": "#C62828", "text": "#FFFFFF" },
   "team": {
-    "yet_to_bat": "#42424280", "highlight_color": "#FFC107", "name": "#E0E0E0", "score": "#FFFFFF", "overs": "#BDBDBD",
+    "yet_to_bat": "#FFFFFF", "highlight_color": "#FFC107", "name": "#E0E0E0", "score": "#FFFFFF", "overs": "#BDBDBD",
     "vs_background": "#303F9F", "vs_text": "#FFC107", "venue": "#FFFFFF", "equation": "#FFC107", "time_left": "#FFFFFF",
     "time_left_label": "#BDBDBD", "time_left_divider": "#4DFFFFFF"
   },
@@ -284,7 +284,7 @@ object ThemeConstants {
   "upcoming_badge": { "background": "#37474F", "text": "#FFFFFF" },
   "result_badge": { "background": "#2E7D32", "text": "#FFFFFF" },
   "team": {
-    "yet_to_bat": "#FFFFFF66", "highlight_color": "#4CAF50", "name": "#FFFFFF", "score": "#FFFFFF", "overs": "#B0BEC5",
+    "yet_to_bat": "#FFFFFF", "highlight_color": "#4CAF50", "name": "#FFFFFF", "score": "#FFFFFF", "overs": "#B0BEC5",
     "vs_background": "#1B5E20", "vs_text": "#FFFFFF", "venue": "#B0BEC5", "equation": "#4CAF50", "time_left": "#FFFFFF",
     "time_left_label": "#B0BEC5", "time_left_divider": "#FFFFFF33"
   },

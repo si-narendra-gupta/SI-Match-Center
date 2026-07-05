@@ -33,6 +33,8 @@ class MatchCenterMapper @Inject constructor(
             allPlayerList
         )
 
+        val tossText = getTossText(entity)
+
         return IPLMatch(
             matchId = matchData?.id,
             matchGameId = matchData?.code,
@@ -53,7 +55,8 @@ class MatchCenterMapper @Inject constructor(
             eventState = eventState,
             venueName = matchDetail?.venue?.name,
             eventStatus = matchDetail?.status,
-            eventSubStatus = matchDetail?.prematch ?: matchDetail?.equation,
+            eventSubStatus = if (matchDetail?.statusId == "127") tossText else matchDetail?.prematch
+                ?: matchDetail?.equation,
             eventStatusId = matchDetail?.statusId,
             homeTeamId = teamHomeId,
             awayTeamId = teamAwayId,
@@ -63,7 +66,7 @@ class MatchCenterMapper @Inject constructor(
             topBatters = topBatters,
             topBowlers = topBowlers,
             weather = matchDetail?.weather,
-            toss = getTossText(entity),
+            toss = tossText,
             umpires = matchDetail?.officials?.umpires,
             referee = matchDetail?.officials?.referee,
             totalInnings = entity.allInnings.size,
