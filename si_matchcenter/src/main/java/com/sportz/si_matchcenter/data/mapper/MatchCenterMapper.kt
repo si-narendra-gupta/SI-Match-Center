@@ -6,7 +6,6 @@ import com.sportz.si_matchcenter.business.domain.model.EventState
 import com.sportz.si_matchcenter.business.domain.model.IPLMatch
 import com.sportz.si_matchcenter.business.domain.model.Inning
 import com.sportz.si_matchcenter.data.model.MatchCenterResponse
-import java.util.TimeZone
 import javax.inject.Inject
 
 class MatchCenterMapper @Inject constructor(
@@ -41,13 +40,13 @@ class MatchCenterMapper @Inject constructor(
             teamNameAvsTeamNameB = "$teamHomeShort vs $teamAwayShort",
             matchNo = matchData?.number,
             seriesName = matchDetail?.series?.name,
-            beautifiedStartDate = CalendarUtils.convertDateStringToSpecifiedDateString(
+            beautifiedStartDate = CalendarUtils.convertDateToSpecifiedDate(
                 dateString = matchData?.startDate,
                 dateFormat = CalendarUtils.MATCH_FULL_DATE_WITH_OFFSET,
                 requiredDateFormat = CalendarUtils.MATCH_REQUIRED_DATE_FORMAT
             ),
             startDate = matchData?.startDate,
-            time = CalendarUtils.convertDateStringToSpecifiedDateString(
+            time = CalendarUtils.convertDateToSpecifiedDate(
                 dateString = matchData?.startDate,
                 dateFormat = CalendarUtils.MATCH_FULL_DATE_WITH_OFFSET,
                 requiredDateFormat = CalendarUtils.MATCH_TIME

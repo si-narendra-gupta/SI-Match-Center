@@ -55,14 +55,13 @@ sealed class MatchCenterIntent : MviIntent {
 
 @HiltViewModel
 class MatchCenterViewModel @Inject constructor(
-    private val baseConfigContract: BaseConfigContract,
     private val fixtureConfigContract: SiFeedFixtureConfigContract,
     private val getMatchListingUseCase: GetMatchListingUseCase,
     private val getManhattanDataUseCase: GetManhattanDataUseCase,
     private val getSpiderGraphUseCase: GetSpiderGraphUseCase,
     private val getWallStreamUseCase: GetWallStreamUseCase,
     private val gson: Gson
-) : BaseScreenViewModel<MatchCenterUiState, MatchCenterIntent>(baseConfigContract) {
+) : BaseScreenViewModel<MatchCenterUiState, MatchCenterIntent>() {
 
 
     // for dynamic

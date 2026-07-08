@@ -140,7 +140,7 @@ fun MatchCountdown(match: IPLMatch, teamTheme: Team?) {
     var seconds by remember { mutableStateOf("00") }
 
     LaunchedEffect(match.startDate) {
-        val targetMillis = CalendarUtils.convertDateStringToMillis(
+        val targetMillis = CalendarUtils.convertDateToMillis(
             match.startDate, CalendarUtils.MATCH_FULL_DATE_WITH_OFFSET
         )
         if (targetMillis > 0) {

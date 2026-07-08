@@ -6,12 +6,11 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.ServerResponseException
-import io.ktor.client.request.HttpRequestBuilder
-import io.ktor.client.request.get
-import io.ktor.client.request.post
 import io.ktor.client.request.forms.MultiPartFormDataContent
+import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.parameter
+import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
@@ -22,7 +21,6 @@ import io.ktor.http.contentType
 import io.ktor.http.isSuccess
 import io.ktor.http.path
 import io.ktor.http.takeFrom
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.serialization.SerializationException
 import java.io.IOException
 import java.net.ConnectException
@@ -30,30 +28,14 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.collections.component1
-import kotlin.collections.component2
-import kotlin.collections.forEach
 
 /**
  * Helper class for making Ktor API calls with automatic header injection
  */
 @Singleton
 class KtorServiceHelper @Inject constructor(
-    private val httpClient: HttpClientFactory,
-    private val baseLocalStorageManager: BaseLocalStorageManager
+    private val httpClient: HttpClientFactory
 ) {
-    
-    /**
-     * Adds common headers (auth and user token) to the request
-     */
-    @PublishedApi
-    internal suspend fun HttpRequestBuilder.addCommonHeaders() {
-        val token = baseLocalStorageManager.getUserToken().firstOrNull() ?: ""
-        if (token.isNotEmpty()) {
-            header("usertoken", token)
-        }
-    }
-
     fun getHttpClient(): HttpClient = httpClient.getHttpClient()
 
     suspend inline fun <reified T : Any> postApiCall(
@@ -76,13 +58,12 @@ class KtorServiceHelper @Inject constructor(
                             }
                         }
 
-                        addCommonHeaders()
-
                         // Set content type and body based on request type
                         when {
                             formData != null -> {
                                 setBody(MultiPartFormDataContent(formData))
                             }
+
                             jsonRequestBody != null -> {
                                 contentType(contentType)
                                 setBody(jsonRequestBody)
@@ -95,6 +76,7 @@ class KtorServiceHelper @Inject constructor(
                         Log.d("Headers Network", headers.entries().toString())
                     }
                 }
+
                 else -> throw IllegalArgumentException("Unsupported HTTP method: $method")
             }
         }
@@ -111,22 +93,19 @@ class KtorServiceHelper @Inject constructor(
                 HttpMethod.Get -> {
                     get {
                         url {
-                            if (endpoint.contains("http"))
-                                takeFrom(endpoint)
-                            else
-                                path(endpoint)
+                            if (endpoint.contains("http")) takeFrom(endpoint)
+                            else path(endpoint)
                             queryParameters.forEach { (key, value) ->
                                 parameter(key, value)
                             }
                         }
-
-                        addCommonHeaders()
 
                         additionalHeaders.forEach { (key, value) ->
                             header(key, value)
                         }
                     }
                 }
+
                 else -> throw IllegalArgumentException("Unsupported HTTP method: $method")
             }
         }
@@ -138,7 +117,7 @@ class KtorServiceHelper @Inject constructor(
     ): NetworkResult<T> {
         return try {
             val response: HttpResponse = this.call()
-            when  {
+            when {
                 response.status.isSuccess() -> {
                     try {
                         val body: T = response.body()
@@ -146,9 +125,7 @@ class KtorServiceHelper @Inject constructor(
                     } catch (e: Exception) {
                         e.printStackTrace()
                         NetworkResult.ApiError(
-                            response.status.value,
-                            "Failed to parse response: ${e.message}",
-                            null
+                            response.status.value, "Failed to parse response: ${e.message}", null
                         )
                     }
                 }
@@ -159,7 +136,11 @@ class KtorServiceHelper @Inject constructor(
                     } catch (e: Exception) {
                         null
                     }
-                    NetworkResult.Error(code = response.status.value, message = response.status.description, errorBody)
+                    NetworkResult.Error(
+                        code = response.status.value,
+                        message = response.status.description,
+                        errorBody
+                    )
 
                 }
             }
@@ -168,13 +149,29 @@ class KtorServiceHelper @Inject constructor(
             when (throwable) {
 
                 is ClientRequestException -> {
-                    val errorBody = try { throwable.response.bodyAsText() } catch (ex: Exception) { null }
-                    NetworkResult.Error(throwable.response.status.value, throwable.message, errorBody)
+                    val errorBody = try {
+                        throwable.response.bodyAsText()
+                    } catch (ex: Exception) {
+                        null
+                    }
+                    NetworkResult.Error(
+                        throwable.response.status.value,
+                        throwable.message,
+                        errorBody
+                    )
                 }
 
                 is ServerResponseException -> {
-                    val errorBody = try { throwable.response.bodyAsText() } catch (ex: Exception) { null }
-                    NetworkResult.Error(throwable.response.status.value, "Server error: ${throwable.message}", errorBody)
+                    val errorBody = try {
+                        throwable.response.bodyAsText()
+                    } catch (ex: Exception) {
+                        null
+                    }
+                    NetworkResult.Error(
+                        throwable.response.status.value,
+                        "Server error: ${throwable.message}",
+                        errorBody
+                    )
                 }
 
                 is UnknownHostException -> {
@@ -186,7 +183,11 @@ class KtorServiceHelper @Inject constructor(
                 }
 
                 is SocketTimeoutException -> {
-                    NetworkResult.Exception(SocketTimeoutException(ERROR_MESSAGE_SOCKET_TIMEOUT_EXCEPTION))
+                    NetworkResult.Exception(
+                        SocketTimeoutException(
+                            ERROR_MESSAGE_SOCKET_TIMEOUT_EXCEPTION
+                        )
+                    )
                 }
 
                 is IOException -> {
@@ -197,8 +198,14 @@ class KtorServiceHelper @Inject constructor(
                 is java.util.concurrent.TimeoutException -> {
                     NetworkResult.Exception(Throwable(ERROR_MESSAGE_SOCKET_TIMEOUT_EXCEPTION))
                 }
+
                 is SerializationException -> {
-                    NetworkResult.Exception(SerializationException("Response parsing failed: ${throwable.message}", throwable))
+                    NetworkResult.Exception(
+                        SerializationException(
+                            "Response parsing failed: ${throwable.message}",
+                            throwable
+                        )
+                    )
                 }
 
                 else -> {
