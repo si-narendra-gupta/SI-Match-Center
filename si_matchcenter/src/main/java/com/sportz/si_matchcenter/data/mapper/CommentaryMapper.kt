@@ -5,9 +5,7 @@ import com.sportz.si_matchcenter.business.domain.model.CustomMetaData
 import com.sportz.si_matchcenter.business.domain.model.DomainOverSummary
 import com.sportz.si_matchcenter.business.domain.model.EventState
 import com.sportz.si_matchcenter.data.model.lastsixball.CommentaryDataModel
-import javax.inject.Inject
-
-class CommentaryMapper @Inject constructor() {
+class CommentaryMapper {
 
     fun toDomain(response: CommentaryDataModel, eventState: EventState): CustomMetaData {
         val commentaryList = response.assets?.mapNotNull { asset ->

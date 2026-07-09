@@ -5,9 +5,7 @@ import com.sportz.si_matchcenter.business.domain.model.TopPlayer
 import com.sportz.si_matchcenter.data.model.Inning
 import com.sportz.si_matchcenter.data.model.Players
 import com.sportz.si_matchcenter.data.model.TeamDetail
-import javax.inject.Inject
-
-class PlayerMapper @Inject constructor() {
+class PlayerMapper {
 
     fun mapTeamPlayerList(players: Players?): List<TeamSquadPlayer> {
         return players?.map { (id, player) ->

@@ -2,8 +2,6 @@ package com.sportz.simatchcenter.data.remote
 
 import com.sportz.si_matchcenter.data.remote.SiFeedFixtureConfigContract
 import com.sportz.simatchcenter.BuildConfig
-import javax.inject.Inject
-import javax.inject.Singleton
 
 
 object AppReplaceKeys {
@@ -14,9 +12,7 @@ object AppReplaceKeys {
     const val INNING = "{inning}"
 
 }
-
-@Singleton
-class AppConfig @Inject constructor() : SiFeedFixtureConfigContract {
+class AppConfig : SiFeedFixtureConfigContract {
     override fun getBaseUrl(): String = "https://www.rajasthanroyals.com/" // Example URL
 
     override fun getIsDebugMode(): Boolean = BuildConfig.DEBUG

@@ -5,9 +5,7 @@ import com.sportz.si_matchcenter.business.domain.model.SpiderRegion
 import com.sportz.si_matchcenter.business.domain.model.SpiderShot
 import com.sportz.si_matchcenter.business.domain.model.SpiderZone
 import com.sportz.si_matchcenter.data.model.spidergraph.SpiderGraph
-import javax.inject.Inject
-
-class SpiderGraphMapper @Inject constructor() : EntityMapper<SpiderGraph, SpiderZone> {
+class SpiderGraphMapper : EntityMapper<SpiderGraph, SpiderZone> {
 
     override fun toDomain(entity: SpiderGraph): SpiderZone {
         val allShots = mutableListOf<SpiderShot>()

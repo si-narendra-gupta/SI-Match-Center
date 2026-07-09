@@ -9,10 +9,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.sportz.si_matchcenter.presentation.ui.screen.MatchCenterContent
+import com.sportz.si_matchcenter.presentation.ui.viewmodel.MatchCenterViewModel
 
 @Composable
 fun MatchCenterScreen(
-    gameId: String, theme: String? = null
+    gameId: String,
+    viewModel: MatchCenterViewModel,
+    theme: String? = null
 ) {
     Scaffold(
         topBar = {
@@ -26,7 +29,7 @@ fun MatchCenterScreen(
                 .padding(paddingValues)
                 .background(Color.Transparent)
         ) {
-            MatchCenterContent(gameId = gameId, theme = theme)
+            MatchCenterContent(gameId = gameId, theme = theme, viewModel = viewModel)
         }
     }
 }

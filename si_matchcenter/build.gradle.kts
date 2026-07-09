@@ -4,8 +4,6 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.kotlin.ksp)
-    alias(libs.plugins.android.hilt)
     id("maven-publish")
 }
 
@@ -51,15 +49,11 @@ afterEvaluate {
 }
 
 dependencies {
-    implementation(project(":base"))
+    api(project(":base"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-
-    // Hilt
-    implementation(libs.dagger.hilt)
-    ksp(libs.dagger.hilt.compiler)
 
     // Compose
     implementation(platform(libs.androidx.compose.bom))
@@ -71,7 +65,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation(libs.androidx.hilt.navigation.compose)
 
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.coil.compose)

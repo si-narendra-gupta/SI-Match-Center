@@ -11,9 +11,7 @@ import com.sportz.si_matchcenter.data.model.Inning
 import com.sportz.si_matchcenter.data.model.MatchCenterResponse
 import com.sportz.si_matchcenter.data.model.TeamDetail
 import com.sportz.si_matchcenter.data.remote.SiFeedFixtureConfigContract
-import javax.inject.Inject
-
-class ParticipantMapper @Inject constructor(
+class ParticipantMapper(
     private val siFeedFixtureConfigContract: SiFeedFixtureConfigContract,
     private val playerMapper: PlayerMapper
 ) {

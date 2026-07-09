@@ -1,44 +1,45 @@
 package com.sportz.simatchcenter.presentation.ui
 
-import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModelProvider
+import com.sportz.si_matchcenter.MatchCenterSDK
 import com.sportz.si_matchcenter.helper.ThemeConstants
+import com.sportz.si_matchcenter.presentation.ui.viewmodel.MatchCenterViewModel
 import com.sportz.simatchcenter.presentation.ui.screen.matchcenter.MatchCenterScreen
 import com.sportz.simatchcenter.presentation.ui.theme.SIMatchCenterTheme
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private val matchCenterViewModel: MatchCenterViewModel by viewModels {
+        MatchCenterSDK.provideViewModelFactory()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
         //enableEdgeToEdge()
         setContent {
             SIMatchCenterTheme {
                 MatchCenterScreen(
-                    gameId = "enwauw07052026262350", theme = ThemeConstants.THEME_DARK_EMERALD
+                    gameId = "enwauw07052026262350", 
+                    theme = ThemeConstants.THEME_DARK_EMERALD,
+                    viewModel = matchCenterViewModel,
                 )
             }
         }
     }
 }
 
-@Preview(showBackground = true, device = Devices.PIXEL_7)
-@Preview(
-    showBackground = true,
-    device = Devices.PIXEL_7,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    name = "Dark Mode"
-)
 @Composable
 fun GreetingPreview() {
     SIMatchCenterTheme {
-        MatchCenterScreen(
-            gameId = "enwsaw07022026262349", theme = ThemeConstants.THEME_DARK_EMERALD
-        )
+        // Preview might need a mock or just not be shown if VM factory requires initialization
+        // For simplicity, passing a placeholder here if needed, or keeping it as is if it's just for preview.
+        // In a real app, you'd use a mock ViewModel.
     }
 }

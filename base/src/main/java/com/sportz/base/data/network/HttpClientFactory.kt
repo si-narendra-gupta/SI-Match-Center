@@ -17,14 +17,11 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.http.ContentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * HttpClient factory with better configuration and error handling
  */
-@Singleton
-class HttpClientFactory @Inject constructor(
+class HttpClientFactory(
     private val baseConfigContract: BaseConfigContract
 ) {
     

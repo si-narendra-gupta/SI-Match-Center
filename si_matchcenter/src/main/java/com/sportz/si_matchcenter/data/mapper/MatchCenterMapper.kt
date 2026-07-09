@@ -6,9 +6,7 @@ import com.sportz.si_matchcenter.business.domain.model.EventState
 import com.sportz.si_matchcenter.business.domain.model.IPLMatch
 import com.sportz.si_matchcenter.business.domain.model.Inning
 import com.sportz.si_matchcenter.data.model.MatchCenterResponse
-import javax.inject.Inject
-
-class MatchCenterMapper @Inject constructor(
+class MatchCenterMapper(
     private val playerMapper: PlayerMapper,
     private val participantMapper: ParticipantMapper
 ) : EntityMapper<MatchCenterResponse, IPLMatch> {

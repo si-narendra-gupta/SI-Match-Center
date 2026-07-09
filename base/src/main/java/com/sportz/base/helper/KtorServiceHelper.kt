@@ -26,14 +26,11 @@ import java.io.IOException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
-import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * Helper class for making Ktor API calls with automatic header injection
  */
-@Singleton
-class KtorServiceHelper @Inject constructor(
+class KtorServiceHelper(
     private val httpClient: HttpClientFactory
 ) {
     fun getHttpClient(): HttpClient = httpClient.getHttpClient()

@@ -11,13 +11,9 @@ import com.sportz.si_matchcenter.data.mapper.SpiderGraphMapper
 import com.sportz.si_matchcenter.data.mapper.CommentaryMapper
 import com.sportz.si_matchcenter.data.remote.SiFeedFixtureConfigContract
 import com.sportz.si_matchcenter.data.service.MatchCenterService
-import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import javax.inject.Inject
-
-@ViewModelScoped
-class MatchCenterRepositoryImpl @Inject constructor(
+class MatchCenterRepositoryImpl(
     private val matchCenterService: MatchCenterService,
     private val matchCenterMapper: MatchCenterMapper,
     private val spiderGraphMapper: SpiderGraphMapper,

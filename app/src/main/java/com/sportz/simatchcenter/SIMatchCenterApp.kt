@@ -1,7 +1,12 @@
 package com.sportz.simatchcenter
 
 import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import com.sportz.si_matchcenter.MatchCenterSDK
+import com.sportz.simatchcenter.data.remote.AppConfig
 
-@HiltAndroidApp
-class SIMatchCenterApp : Application()
+class SIMatchCenterApp : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        MatchCenterSDK.init(AppConfig())
+    }
+}

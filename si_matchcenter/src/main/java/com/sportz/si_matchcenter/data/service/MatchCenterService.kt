@@ -4,9 +4,7 @@ import com.sportz.base.helper.KtorServiceHelper
 import com.sportz.base.helper.toApiResult
 import com.sportz.si_matchcenter.data.model.MatchCenterResponse
 import com.sportz.si_matchcenter.data.model.lastsixball.CommentaryDataModel
-import javax.inject.Inject
-
-class MatchCenterService @Inject constructor(
+class MatchCenterService(
     private val ktorServiceHelper: KtorServiceHelper
 ) {
     suspend fun getMatchListing(url: String) =

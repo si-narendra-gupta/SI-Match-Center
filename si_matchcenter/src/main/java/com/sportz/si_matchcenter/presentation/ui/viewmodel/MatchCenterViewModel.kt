@@ -21,13 +21,11 @@ import com.sportz.si_matchcenter.business.interactor.GetSpiderGraphUseCase
 import com.sportz.si_matchcenter.business.interactor.GetWallStreamUseCase
 import com.sportz.si_matchcenter.data.remote.SiFeedFixtureConfigContract
 import com.sportz.si_matchcenter.helper.ThemeHelper
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @Immutable
 data class MatchCenterUiState(
@@ -53,8 +51,7 @@ sealed class MatchCenterIntent : MviIntent {
         MatchCenterIntent()
 }
 
-@HiltViewModel
-class MatchCenterViewModel @Inject constructor(
+class MatchCenterViewModel(
     private val fixtureConfigContract: SiFeedFixtureConfigContract,
     private val getMatchListingUseCase: GetMatchListingUseCase,
     private val getManhattanDataUseCase: GetManhattanDataUseCase,

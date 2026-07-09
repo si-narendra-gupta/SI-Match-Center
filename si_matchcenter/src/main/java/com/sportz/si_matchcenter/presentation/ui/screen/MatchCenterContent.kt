@@ -21,7 +21,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sportz.base.ui.common.BaseState
 import com.sportz.si_matchcenter.business.domain.model.EventState
@@ -36,7 +35,11 @@ import com.sportz.si_matchcenter.presentation.ui.viewmodel.MatchCenterUiState
 import com.sportz.si_matchcenter.presentation.ui.viewmodel.MatchCenterViewModel
 
 @Composable
-fun MatchCenterContent(viewModel: MatchCenterViewModel = hiltViewModel(), gameId: String,theme: String? = null) {
+fun MatchCenterContent(
+    gameId: String,
+    viewModel: MatchCenterViewModel,
+    theme: String? = null
+) {
 
     LaunchedEffect(theme) {
         viewModel.setTheme(theme)
