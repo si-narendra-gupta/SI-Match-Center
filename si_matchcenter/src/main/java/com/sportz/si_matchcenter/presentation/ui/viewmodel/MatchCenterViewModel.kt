@@ -3,7 +3,6 @@ package com.sportz.si_matchcenter.presentation.ui.viewmodel
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
-import com.sportz.base.helper.BaseConfigContract
 import com.sportz.base.helper.Result
 import com.sportz.base.ui.common.BaseScreenViewModel
 import com.sportz.base.ui.common.MviIntent

@@ -5,8 +5,6 @@
 <img width="108" height="228" alt="Screenshot_20260703-212809" src="https://github.com/user-attachments/assets/4c78b6b1-7bdb-41be-9f00-3636031a9d6b" />
 <img width="108" height="228" alt="Screenshot_20260703-213147 (1)" src="https://github.com/user-attachments/assets/2034be02-dc4d-4aa1-ba6d-aad19f9a81da" />
 
-
-
 # SI Match Center Library Integration Guide
 
 This guide provides step-by-step instructions on how to integrate the `si_matchcenter` library into your Android application.
@@ -19,41 +17,31 @@ Before you begin, ensure your project meets the following requirements:
 *   **Android Gradle Plugin**: Version 9.2.1 or higher.
 *   **Min SDK**: API 24 or higher.
 *   **Kotlin Version**: 2.4.0 or higher.
-*   **Compose**: Jetpack Compose enabled (using Kotlin Compose Compiler plugin).
-*   **Hilt**: Dagger Hilt configured for dependency injection.
+*   **Compose**: Jetpack Compose enabled.
 *   **Kotlin Serialization**: Required for data models.
 
-## Step 1: Add Plugins and Repository
+## Step 1: Add Repository
 
-It is recommended to use a **Version Catalog** (`libs.versions.toml`) to manage your dependencies and plugins.
+It is recommended to use a **Version Catalog** (`libs.versions.toml`) to manage your dependencies.
 
 Add the following to your `gradle/libs.versions.toml`:
 
 ```toml
 [versions]
 kotlin = "2.4.0"
-ksp = "2.3.9"
-hilt = "2.60"
 
 [libraries]
-si-matchcenter = { group = "com.github.si-narendra-gupta", name = "SI-Match-Center", version = "1.0.2" }
-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
-hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
+si-matchcenter = { group = "com.github.si-narendra-gupta", name = "SI-Match-Center", version = "1.0.3" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.11.0" }
-androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version = "1.2.0" }
 
 [plugins]
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-android-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ```
 
-Then, add the plugins to your **project-level** `build.gradle.kts`:
+Then, add the plugin to your **project-level** `build.gradle.kts`:
 
 ```kotlin
 plugins {
-    alias(libs.plugins.kotlin.ksp) apply false
-    alias(libs.plugins.android.hilt) apply false
     alias(libs.plugins.kotlin.serialization) apply false
 }
 ```
@@ -79,8 +67,6 @@ In your **application-level** `build.gradle.kts`, apply the plugins and add the 
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.ksp)
-    alias(libs.plugins.android.hilt)
     alias(libs.plugins.kotlin.serialization)
 }
 
@@ -100,17 +86,13 @@ dependencies {
     // Library dependency
     implementation(libs.si.matchcenter)
     
-    // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-    
     // Kotlin Serialization
     implementation(libs.kotlinx.serialization.json)
     
-    // Compose Support for Hilt
-    implementation(libs.androidx.hilt.navigation.compose)
+    // Lifecycle and ViewModel Support
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 }
-```
 ```
 
 ## Step 3: Add Internet Permission
@@ -128,15 +110,12 @@ The library requires certain configurations to be provided by the host applicati
 ```kotlin
 import com.sportz.si_matchcenter.data.remote.SiFeedFixtureConfigContract
 import com.sportz.si_matchcenter.business.domain.model.MatchTabList
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class AppConfig @Inject constructor() : SiFeedFixtureConfigContract {
+class AppConfig : SiFeedFixtureConfigContract {
     
     override fun getBaseUrl(): String = "https://your-api-base-url.com/"
     
-    override fun getIsDebugMode(): Boolean = true // Use BuildConfig.DEBUG
+    override fun getIsDebugMode(): Boolean = true 
 
     override fun getTeamLogo(teamId: String): String {
         return "${getBaseUrl()}static-assets/images/teams/${teamId}.png"
@@ -160,82 +139,71 @@ class AppConfig @Inject constructor() : SiFeedFixtureConfigContract {
         return "${getBaseUrl()}graphs/spider/${gameId}_batsman_splits_${inning}.json"
     }
 
-    // Optional: Override to provide custom tab configurations
     override fun getMatchTabs(): MatchTabList? = null
 }
 ```
 
-## Step 5: Provide Configuration via Hilt
+## Step 5: Initialize the SDK
 
-Create a Hilt module in your application to bind your implementation to the library's contract:
-
-```kotlin
-import com.sportz.si_matchcenter.data.remote.SiFeedFixtureConfigContract
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
-
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class ConfigModule {
-
-    @Binds
-    @Singleton
-    abstract fun bindSiFeedFixtureConfig(appConfig: AppConfig): SiFeedFixtureConfigContract
-}
-```
-
-## Step 6: Initialize Hilt
-
-Your `Application` class must be annotated with `@HiltAndroidApp`:
+Initialize the `MatchCenterSDK` in your `Application` class:
 
 ```kotlin
 import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import com.sportz.si_matchcenter.MatchCenterSDK
 
-@HiltAndroidApp
-class MyApplication : Application()
+class MyApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        // Initialize with your config implementation
+        MatchCenterSDK.init(AppConfig())
+    }
+}
 ```
 
-## Step 7: Configure the Activity
+## Step 6: Configure the Activity and ViewModel
 
-The Activity hosting the Match Center must be annotated with `@AndroidEntryPoint`.
+Since the library is DI-agnostic, you need to provide the ViewModel manually using the SDK's factory.
 
 ```kotlin
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
+import com.sportz.si_matchcenter.MatchCenterSDK
 import com.sportz.si_matchcenter.presentation.ui.screen.MatchCenterContent
+import com.sportz.si_matchcenter.presentation.ui.viewmodel.MatchCenterViewModel
 import com.sportz.si_matchcenter.helper.ThemeConstants
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    // Retrieve the ViewModel using MatchCenterSDK's factory
+    private val matchCenterViewModel: MatchCenterViewModel by viewModels {
+        MatchCenterSDK.provideViewModelFactory()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            // YourTheme {
-                MatchCenterContent(
-                    gameId = "rrck03302026267884",
-                    theme = ThemeConstants.THEME_ROYAL_GOLD
-                )
-            // }
+            MatchCenterContent(
+                gameId = "rrck03302026267884",
+                viewModel = matchCenterViewModel,
+                theme = ThemeConstants.THEME_ROYAL_GOLD
+            )
         }
     }
 }
 ```
 
-## Step 8: Component Usage
+## Step 7: Component Usage
 
 The main entry point is the `MatchCenterContent` composable.
 
 ### Parameters:
 *   `gameId`: The unique identifier for the match (Required).
+*   `viewModel`: The `MatchCenterViewModel` instance (Required).
 *   `theme`: A JSON string or a constant from `ThemeConstants` to apply specific theme colors (Optional).
 
-## Step 9: Theming
+## Step 8: Theming
 
 The library supports dynamic theming. You can use pre-defined constants from `ThemeConstants`:
 *   `ThemeConstants.THEME_PINK_NAVY` (Default)
