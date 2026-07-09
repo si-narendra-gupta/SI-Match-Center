@@ -8,5 +8,5 @@ plugins {
 
 allprojects {
     group = "com.github.si-narendra-gupta"
-    version = "1.0.3"
+    version = "1.0.3-alpha"
 }
