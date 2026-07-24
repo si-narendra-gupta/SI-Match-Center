@@ -1,7 +1,7 @@
 package com.sportz.si_matchcenter.data.repository
 
-import com.sportz.base.helper.Result
-import com.sportz.base.helper.mapToDomainResult
+import com.sportz.match_center_base.helper.Result
+import com.sportz.match_center_base.helper.mapToDomainResult
 import com.sportz.si_matchcenter.business.domain.model.CustomMetaData
 import com.sportz.si_matchcenter.business.domain.model.EventState
 import com.sportz.si_matchcenter.business.domain.model.IPLMatch
@@ -9,7 +9,7 @@ import com.sportz.si_matchcenter.business.repository.MatchCenterRepository
 import com.sportz.si_matchcenter.data.mapper.MatchCenterMapper
 import com.sportz.si_matchcenter.data.mapper.SpiderGraphMapper
 import com.sportz.si_matchcenter.data.mapper.CommentaryMapper
-import com.sportz.si_matchcenter.data.remote.SiFeedFixtureConfigContract
+import com.sportz.si_matchcenter.data.remote.SiFeedFixtureConfigContractMatchCenter
 import com.sportz.si_matchcenter.data.service.MatchCenterService
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -18,7 +18,7 @@ class MatchCenterRepositoryImpl(
     private val matchCenterMapper: MatchCenterMapper,
     private val spiderGraphMapper: SpiderGraphMapper,
     private val commentaryMapper: CommentaryMapper,
-    val siFeedFixtureConfigContract: SiFeedFixtureConfigContract
+    val siFeedFixtureConfigContract: SiFeedFixtureConfigContractMatchCenter
 ) : MatchCenterRepository {
 
     override suspend fun getMatchListing(gameID: String): Result<IPLMatch> = coroutineScope {

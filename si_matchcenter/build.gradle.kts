@@ -49,8 +49,8 @@ afterEvaluate {
 }
 
 dependencies {
-    api(project(":base"))
 
+    api(project(":match_center_base"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

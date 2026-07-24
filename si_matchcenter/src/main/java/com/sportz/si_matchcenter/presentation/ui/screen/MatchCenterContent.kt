@@ -22,7 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.sportz.base.ui.common.BaseState
+import com.sportz.match_center_base.ui.common.MatchCenterBaseState
 import com.sportz.si_matchcenter.business.domain.model.EventState
 import com.sportz.si_matchcenter.business.domain.model.MatchTabId
 import com.sportz.si_matchcenter.business.domain.model.MatchTabItem
@@ -32,12 +32,12 @@ import com.sportz.si_matchcenter.presentation.ui.theme.LocalMatchCenterColors
 import com.sportz.si_matchcenter.presentation.ui.theme.toColor
 import com.sportz.si_matchcenter.presentation.ui.viewmodel.MatchCenterIntent
 import com.sportz.si_matchcenter.presentation.ui.viewmodel.MatchCenterUiState
-import com.sportz.si_matchcenter.presentation.ui.viewmodel.MatchCenterViewModel
+import com.sportz.si_matchcenter.presentation.ui.viewmodel.MatchCenterViewModelMatchCenter
 
 @Composable
 fun MatchCenterContent(
     gameId: String,
-    viewModel: MatchCenterViewModel,
+    viewModel: MatchCenterViewModelMatchCenter,
     theme: String? = null
 ) {
 
@@ -52,7 +52,7 @@ fun MatchCenterContent(
     }
 
     val themeColors =
-        (uiState as? BaseState.Success)?.data?.themeColors ?: MatchCenterThemeColors.default()
+        (uiState as? MatchCenterBaseState.Success)?.data?.themeColors ?: MatchCenterThemeColors.default()
 
     CompositionLocalProvider(LocalMatchCenterColors provides themeColors) {
         val backgroundColor = themeColors.screen?.background.toColor()
@@ -65,11 +65,11 @@ fun MatchCenterContent(
                 )
         ) {
             when (val state = uiState) {
-                is BaseState.Loading -> {
+                is MatchCenterBaseState.Loading -> {
                     CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                 }
 
-                is BaseState.Success -> {
+                is MatchCenterBaseState.Success -> {
                     MatchCenterSuccessView(
                         data = state.data,
                         onTabSelected = { tab -> viewModel.selectedTab(tab) },
@@ -77,11 +77,11 @@ fun MatchCenterContent(
                     )
                 }
 
-                is BaseState.Empty -> {
+                is MatchCenterBaseState.Empty -> {
                     Text(text = "No matches available", modifier = Modifier.align(Alignment.Center))
                 }
 
-                is BaseState.Error -> {
+                is MatchCenterBaseState.Error -> {
                     Text(
                         text = state.message,
                         color = Color.Red,
@@ -95,7 +95,7 @@ fun MatchCenterContent(
 
 @Composable
 fun MatchCenterSuccessView(
-    data: MatchCenterUiState, onTabSelected: (MatchTabItem) -> Unit, viewModel: MatchCenterViewModel
+    data: MatchCenterUiState, onTabSelected: (MatchTabItem) -> Unit, viewModel: MatchCenterViewModelMatchCenter
 ) {
     val themeColors = viewModel.getCurrentUiData()?.themeColors
 

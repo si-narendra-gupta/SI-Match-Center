@@ -38,11 +38,11 @@ import com.sportz.si_matchcenter.business.domain.model.themecolor.CommentaryCard
 import com.sportz.si_matchcenter.presentation.ui.theme.toColor
 import com.sportz.si_matchcenter.presentation.ui.viewmodel.MatchCenterIntent
 import com.sportz.si_matchcenter.presentation.ui.viewmodel.MatchCenterUiState
-import com.sportz.si_matchcenter.presentation.ui.viewmodel.MatchCenterViewModel
+import com.sportz.si_matchcenter.presentation.ui.viewmodel.MatchCenterViewModelMatchCenter
 
 @Composable
 fun CommentaryScreen(
-    match: IPLMatch, viewModel: MatchCenterViewModel, uiState: MatchCenterUiState
+    match: IPLMatch, viewModel: MatchCenterViewModelMatchCenter, uiState: MatchCenterUiState
 ) {
 
     val colortheme = viewModel.getCurrentUiData()?.themeColors?.match_details

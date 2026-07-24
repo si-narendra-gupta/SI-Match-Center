@@ -10,9 +10,9 @@ import com.sportz.si_matchcenter.business.domain.model.TeamSquadPlayer
 import com.sportz.si_matchcenter.data.model.Inning
 import com.sportz.si_matchcenter.data.model.MatchCenterResponse
 import com.sportz.si_matchcenter.data.model.TeamDetail
-import com.sportz.si_matchcenter.data.remote.SiFeedFixtureConfigContract
+import com.sportz.si_matchcenter.data.remote.SiFeedFixtureConfigContractMatchCenter
 class ParticipantMapper(
-    private val siFeedFixtureConfigContract: SiFeedFixtureConfigContract,
+    private val siFeedFixtureConfigContract: SiFeedFixtureConfigContractMatchCenter,
     private val playerMapper: PlayerMapper
 ) {
 

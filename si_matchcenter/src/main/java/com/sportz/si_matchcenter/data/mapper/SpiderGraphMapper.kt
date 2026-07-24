@@ -1,6 +1,6 @@
 package com.sportz.si_matchcenter.data.mapper
 
-import com.sportz.base.helper.EntityMapper
+import com.sportz.match_center_base.helper.EntityMapper
 import com.sportz.si_matchcenter.business.domain.model.SpiderRegion
 import com.sportz.si_matchcenter.business.domain.model.SpiderShot
 import com.sportz.si_matchcenter.business.domain.model.SpiderZone

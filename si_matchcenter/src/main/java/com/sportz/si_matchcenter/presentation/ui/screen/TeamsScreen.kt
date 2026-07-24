@@ -39,14 +39,14 @@ import com.sportz.si_matchcenter.business.domain.model.themecolor.SubTab
 import com.sportz.si_matchcenter.presentation.ui.theme.toColor
 
 import androidx.compose.runtime.collectAsState
-import com.sportz.si_matchcenter.presentation.ui.viewmodel.MatchCenterViewModel
+import com.sportz.si_matchcenter.presentation.ui.viewmodel.MatchCenterViewModelMatchCenter
 
 @Composable
 fun TeamsScreen(
     match: IPLMatch,
     subTab: SubTab?,
     teamsColor: PlayingTeam?,
-    viewModel: MatchCenterViewModel
+    viewModel: MatchCenterViewModelMatchCenter
 ) {
     val teams = match.participants?.distinctBy { it.id } ?: return
     val uiState by viewModel.uiState.collectAsState()

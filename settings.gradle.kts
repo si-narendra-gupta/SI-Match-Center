@@ -24,5 +24,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "SI Match Center"
 include(":app")
-include(":base")
+include(":match_center_base")
 include(":si_matchcenter")

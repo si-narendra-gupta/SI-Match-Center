@@ -1,7 +1,7 @@
 package com.sportz.si_matchcenter.data.service
 
-import com.sportz.base.helper.KtorServiceHelper
-import com.sportz.base.helper.toApiResult
+import com.sportz.match_center_base.helper.KtorServiceHelper
+import com.sportz.match_center_base.helper.toApiResult
 import com.sportz.si_matchcenter.data.model.MatchCenterResponse
 import com.sportz.si_matchcenter.data.model.lastsixball.CommentaryDataModel
 class MatchCenterService(

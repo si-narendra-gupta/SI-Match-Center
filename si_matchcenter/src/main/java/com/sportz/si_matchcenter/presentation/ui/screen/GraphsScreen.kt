@@ -32,7 +32,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -60,14 +59,13 @@ import com.sportz.si_matchcenter.business.domain.model.MatchTabItem
 import com.sportz.si_matchcenter.business.domain.model.OverData
 import com.sportz.si_matchcenter.business.domain.model.SpiderRegion
 import com.sportz.si_matchcenter.business.domain.model.SpiderShot
-import com.sportz.si_matchcenter.business.domain.model.SpiderZone
 import com.sportz.si_matchcenter.business.domain.model.themecolor.CustomTabDTO
 import com.sportz.si_matchcenter.business.domain.model.themecolor.GraphColor
 import com.sportz.si_matchcenter.business.domain.model.themecolor.SpiderColor
 import com.sportz.si_matchcenter.business.domain.model.themecolor.Tab
 import com.sportz.si_matchcenter.presentation.ui.theme.toColor
 import com.sportz.si_matchcenter.presentation.ui.viewmodel.MatchCenterUiState
-import com.sportz.si_matchcenter.presentation.ui.viewmodel.MatchCenterViewModel
+import com.sportz.si_matchcenter.presentation.ui.viewmodel.MatchCenterViewModelMatchCenter
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
@@ -76,7 +74,7 @@ import kotlin.math.sin
 fun GraphsScreen(
     match: IPLMatch,
     subTabs: List<MatchTabItem>,
-    viewModel: MatchCenterViewModel,
+    viewModel: MatchCenterViewModelMatchCenter,
     colortheme: CustomTabDTO?
 ) {
 
@@ -755,7 +753,7 @@ fun SpiderTab(
     match: IPLMatch,
     graph: GraphColor?,
     uiState: MatchCenterUiState?,
-    viewModel: MatchCenterViewModel
+    viewModel: MatchCenterViewModelMatchCenter
 ) {
     val selectedInning = uiState?.selectedInning ?: 1
     val spiderData = uiState?.spiderData

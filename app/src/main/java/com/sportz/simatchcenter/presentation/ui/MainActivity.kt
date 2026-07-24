@@ -5,16 +5,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.ViewModelProvider
 import com.sportz.si_matchcenter.MatchCenterSDK
 import com.sportz.si_matchcenter.helper.ThemeConstants
-import com.sportz.si_matchcenter.presentation.ui.viewmodel.MatchCenterViewModel
+import com.sportz.si_matchcenter.presentation.ui.viewmodel.MatchCenterViewModelMatchCenter
 import com.sportz.simatchcenter.presentation.ui.screen.matchcenter.MatchCenterScreen
 import com.sportz.simatchcenter.presentation.ui.theme.SIMatchCenterTheme
 
 class MainActivity : ComponentActivity() {
 
-    private val matchCenterViewModel: MatchCenterViewModel by viewModels {
+    private val matchCenterViewModel: MatchCenterViewModelMatchCenter by viewModels {
         MatchCenterSDK.provideViewModelFactory()
     }
 

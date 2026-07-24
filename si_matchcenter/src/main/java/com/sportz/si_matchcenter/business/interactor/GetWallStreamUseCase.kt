@@ -1,6 +1,6 @@
 package com.sportz.si_matchcenter.business.interactor
 
-import com.sportz.base.helper.Result
+import com.sportz.match_center_base.helper.Result
 import com.sportz.si_matchcenter.business.domain.model.CustomMetaData
 import com.sportz.si_matchcenter.business.domain.model.EventState
 import com.sportz.si_matchcenter.business.repository.MatchCenterRepository

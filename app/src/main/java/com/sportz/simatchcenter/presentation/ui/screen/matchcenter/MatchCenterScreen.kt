@@ -9,12 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.sportz.si_matchcenter.presentation.ui.screen.MatchCenterContent
-import com.sportz.si_matchcenter.presentation.ui.viewmodel.MatchCenterViewModel
+import com.sportz.si_matchcenter.presentation.ui.viewmodel.MatchCenterViewModelMatchCenter
 
 @Composable
 fun MatchCenterScreen(
     gameId: String,
-    viewModel: MatchCenterViewModel,
+    viewModel: MatchCenterViewModelMatchCenter,
     theme: String? = null
 ) {
     Scaffold(

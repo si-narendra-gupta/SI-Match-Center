@@ -29,7 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sportz.base.utils.CalendarUtils
+import com.sportz.match_center_base.utils.CalendarUtils
 import com.sportz.si_matchcenter.business.domain.model.IPLMatch
 import com.sportz.si_matchcenter.business.domain.model.Participant
 import com.sportz.si_matchcenter.business.domain.model.themecolor.MatchCenterThemeColors

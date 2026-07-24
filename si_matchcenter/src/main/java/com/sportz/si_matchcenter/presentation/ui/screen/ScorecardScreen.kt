@@ -54,10 +54,10 @@ import com.sportz.si_matchcenter.business.domain.model.themecolor.Scorecard
 import com.sportz.si_matchcenter.presentation.ui.theme.toColor
 
 import androidx.compose.runtime.collectAsState
-import com.sportz.si_matchcenter.presentation.ui.viewmodel.MatchCenterViewModel
+import com.sportz.si_matchcenter.presentation.ui.viewmodel.MatchCenterViewModelMatchCenter
 
 @Composable
-fun ScorecardScreen(match: IPLMatch, colortheme: CustomTabDTO?, viewModel: MatchCenterViewModel) {
+fun ScorecardScreen(match: IPLMatch, colortheme: CustomTabDTO?, viewModel: MatchCenterViewModelMatchCenter) {
     val teams = match.participants ?: return
     val uiState by viewModel.uiState.collectAsState()
     val selectedTeamIndex = uiState?.scorecardTeamIndex ?: 0
